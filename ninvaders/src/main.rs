@@ -7,9 +7,9 @@ use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind};
 use ratatui::{
     buffer::Buffer,
     layout::Rect,
-    style::{Stylize},
+    style::Stylize,
     symbols::border,
-    text::{Line},
+    text::Line,
     widgets::{Block, Paragraph, Widget},
     DefaultTerminal, Frame,
 };
@@ -57,6 +57,8 @@ impl App {
     fn handle_key_event(&mut self, key_event: KeyEvent) {
         match key_event.code {
             KeyCode::Char('q') => self.exit(),
+            KeyCode::Left => self.player.move_left(),
+            KeyCode::Right => self.player.move_right(),
             _ => {}
         }
     }
@@ -69,17 +71,13 @@ impl App {
 impl Widget for &App {
     fn render(self, area: Rect, buf: &mut Buffer) {
         let title = Line::from(" Space Invaders! ".bold());
-        
+
         let block = Block::bordered()
             .title(title.centered())
             .border_set(border::THICK);
 
-        Paragraph::new("")
-            .centered()
-            .block(block)
-            .render(area, buf);
+        Paragraph::new("").centered().block(block).render(area, buf);
 
         self.player.render(area, buf);
     }
 }
-
