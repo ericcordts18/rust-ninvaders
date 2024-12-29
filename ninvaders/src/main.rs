@@ -1,12 +1,15 @@
+mod player;
+use crate::player::Player;
+
 use std::io;
 
 use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind};
 use ratatui::{
     buffer::Buffer,
     layout::Rect,
-    style::{Stylize, Color, Modifier},
+    style::{Stylize},
     symbols::border,
-    text::{Line, Text},
+    text::{Line},
     widgets::{Block, Paragraph, Widget},
     DefaultTerminal, Frame,
 };
@@ -80,13 +83,3 @@ impl Widget for &App {
     }
 }
 
-#[derive(Debug, Default)]
-struct Player{
-}
-
-impl Widget for &Player{
-    fn render(self, area: Rect, buf: &mut Buffer) {
-        let player_sprite = Text::styled("/-^-\\", (Color::Yellow, Modifier::BOLD));
-        player_sprite.render(Rect::new(10, 10, area.width, 1), buf);
-    }
-}
